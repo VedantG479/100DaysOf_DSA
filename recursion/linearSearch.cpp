@@ -1,18 +1,24 @@
 #include<iostream>
 using namespace std;
-bool linearSearch(int *arr, int key,int size){
-    if(size==0)
+bool linear(int arr[], int size, int target){
+    if(size==0){
         return false;
-    if(arr[0]==key)
-        return true;
-    else{
-        return linearSearch(arr+1,key,size-1);
     }
 
+    if(arr[0]==target){
+        return true;
+    }
+    else{
+        bool check = linear(arr+1,size-1,target);
+        return check;
+    }
 }
 int main(){
-    int arr[]={2,4,5,6,7,2,3,91,291,2};
-    int key = 10;
-    cout<<linearSearch(arr,key,10);
+    int arr[] = {2,1,5,6,1,7,8,2,4,7};
+    int size = 10;
+    int element;
+    cout<<"Enter element to find: ";
+    cin>>element;
+    cout<<linear(arr,size,element);
     return 0;
 }

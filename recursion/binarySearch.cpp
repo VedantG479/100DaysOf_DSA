@@ -1,26 +1,26 @@
 #include<iostream>
 using namespace std;
-bool binarySearch(int *arr, int start, int end, int key){
-    if(start>end){
+bool search(int arr[], int start, int end, int target){
+    if(start>end)
         return false;
-    }
-    int mid = start+(end-start)/2;
-    if(arr[mid]==key){
+    int mid = (start + end)/2;
+    if(arr[mid]==target){
         return true;
     }
-    else if(arr[mid]>key){
-        end = mid - 1;
+    else if(arr[mid]>target){
+        return search(arr,start,mid-1,target);
     }
     else{
-        start = mid + 1;
+        return search(arr,mid+1,end,target);
     }
-    mid = start+(end-start)/2;
-    return binarySearch(arr,start,end,key);
 }
 int main(){
-    int arr[] = {2,4,5,6,8,10,12,13,14,19};
-    int start = 0, end = 9;
-    int key = 7;
-    cout<<binarySearch(arr,start,end,key);
+    int arr[] = {1,2,5,8,9,10,12,15,17,29};
+    int size = 10;
+    int start = 0, end = size - 1;
+    int element;
+    cout<<"Enter element to find: ";
+    cin>>element;
+    cout<<search(arr,start,end,element);
     return 0;
 }
