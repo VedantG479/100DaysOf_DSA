@@ -61,19 +61,9 @@ void print(Node* &head){
     cout<<endl;
 }
 
-int main(){
-    Node* head = NULL;
-    insertAtHead(head,10);
-    insertAtEnd(head,50);
-    insertAtPosition(head,20,2);
-    insertAtPosition(head,40,3);
-    insertAtPosition(head,30,3);
-    print(head);
-    // 10 20 30 40 50
-
+void reverseUsingIteration(Node* &head){
     if(head==NULL || head->next==NULL){
-        print(head);
-        return 0;
+        return;
     }
 
     Node* current = head;
@@ -86,6 +76,36 @@ int main(){
         current = forward;
     }
     head = prev;
+}
+void reverseUsingRecursionOne(Node* &head, Node* &current, Node* &prev){
+    if(current==NULL){
+        head = prev;
+        return;
+    } 
+
+    Node* forward = current->next;
+    reverseUsingRecursionOne(head,forward,current);
+    current->next = prev;
+}
+
+int main(){
+    Node* head = NULL;
+    insertAtHead(head,10);
+    insertAtEnd(head,50);
+    insertAtPosition(head,20,2);
+    insertAtPosition(head,40,3);
+    insertAtPosition(head,30,3);
+    print(head);
+    // 10 20 30 40 50
+    
+    //Approach 1:
+    reverseUsingIteration(head);
+    print(head);
+
+    //Approach 2: 
+    Node* current = head;
+    Node* prev = NULL;
+    reverseUsingRecursionOne(head,current,prev);
     print(head);
 
     return 0;

@@ -82,6 +82,19 @@ void deleteAtPosition(Node* &head, int position){
         delete toDelete;
     }
 }
+bool isCircular(Node* head){
+    if(head==NULL){
+        return true;
+    }
+    Node* temp = head->next;
+    while(temp!=NULL && temp!=head){
+        temp = temp->next;
+    }
+    if(temp==NULL){
+        return false;
+    }
+    return true;
+}
 
 int main(){
     Node* node1 = new Node(80);
@@ -103,5 +116,10 @@ int main(){
     deleteAtPosition(head,6);
 
     print(head);
+    if(isCircular(head))
+        cout<<"Circular";
+    else    
+        cout<<"Not Circular";
+    
     return 0;
 }
