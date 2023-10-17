@@ -1,4 +1,5 @@
 #include<iostream>
+#include<map>
 using namespace std;
 
 class Node{
@@ -95,18 +96,65 @@ bool isCircular(Node* head){
     }
     return true;
 }
+bool detectLoop(Node* head){
+    if(head==NULL){
+        return false;
+    }
+    Node* temp = head;
+    map<Node*, bool> visited;
+    while(temp!=NULL){
+        if(visited[temp]==true){
+            return true;
+        }
+        visited[temp] = true;
+        temp = temp->next;
+    }
+    return false;
+}
+bool floydDetection(Node* head){
+    if(head==NULL){
+        return false;
+    }
+    Node *slow = head, *fast = head;
+    while(slow!=NULL && fast!=NULL){
+        fast = fast->next;
+        if(fast!=NULL){
+            fast = fast->next;
+        }
+        slow = slow->next;
+        if(slow==fast){
+            return true;
+        }
+    }
+    return false;
+}
+Node* startingNode(Node* head){
+    if(head==NULL){
+        return NULL;
+    }
+    Node* temp = head;
+    map<Node*, bool> visited;
+    while(temp!=NULL){
+        if(visited[temp]==true){
+            return temp;
+        }
+        visited[temp] = true;
+        temp = temp->next;
+    }
+    return NULL;
+}
 
 int main(){
     Node* node1 = new Node(80);
     Node* head = node1;
-    insertAtHead(head,70);
     insertAtHead(head,50);
-    insertAtHead(head,40);
+    insertAtHead(head,50);
+    insertAtHead(head,30);
 
     insertAtEnd(head,90);
     insertAtEnd(head,100);
 
-    insertAtPosition(head,3,60);
+    insertAtPosition(head,3,50);
     insertAtPosition(head,1,30);
 
     print(head);
@@ -117,9 +165,18 @@ int main(){
 
     print(head);
     if(isCircular(head))
-        cout<<"Circular";
+        cout<<"Circular"<<endl;
     else    
-        cout<<"Not Circular";
+        cout<<"Not Circular"<<endl;
     
+    cout<<detectLoop(head)<<endl;
+    cout<<floydDetection(head)<<endl;
+    
+    Node* loopStart = startingNode(head);
+    if(loopStart!=NULL)
+        cout<<"starting node: "<<loopStart->data<<endl;
+    else    
+        cout<<"no starting node, loop not present"<<endl;
+
     return 0;
 }

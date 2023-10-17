@@ -1,5 +1,7 @@
 #include<iostream>
+#include<map>
 using namespace std;
+
 class Node{
     public: 
     int data;
@@ -106,6 +108,53 @@ bool isCircular(Node* head){
     }
     return true;
 }
+bool detectLoop(Node* head){
+    if(head==NULL){
+        return false;
+    }
+    Node* temp = head->next;
+    map<Node*, bool> visited;
+    while(temp!=NULL){
+        if(visited[temp]==true){
+            return true;
+        }
+        visited[temp] = true;
+        temp = temp->next;
+    }
+    return false;
+}
+bool floydDetection(Node* head){
+    if(head==NULL){
+        return head;
+    }
+    Node *slow = head, *fast = head;
+    while(slow!=NULL && fast!=NULL){
+        fast = fast->next;
+        if(fast!=NULL){
+            fast = fast->next;
+        }
+        slow = slow->next;
+        if(slow==fast){
+            return true;
+        }
+    }
+    return false;
+}
+Node* startingNode(Node* head){
+    if(head==NULL){
+        return NULL;
+    }
+    Node* temp = head;
+    map<Node*, bool> visited;
+    while(temp!=NULL){
+        if(visited[temp]==true){
+            return temp;
+        }
+        visited[temp] = true;
+        temp = temp->next;
+    }
+    return NULL;
+}
 
 int main(){
     Node* tail = NULL;
@@ -124,9 +173,18 @@ int main(){
     print(tail);
 
     if(isCircular(tail))
-        cout<<"Circular";
+        cout<<"Circular"<<endl;
     else    
-        cout<<"Not Circular";
+        cout<<"Not Circular"<<endl;
 
+    cout<<detectLoop(tail)<<endl;
+    cout<<floydDetection(tail->next)<<endl;
+
+    Node* loopStart = startingNode(tail->next);
+    if(loopStart!=NULL)
+        cout<<"starting node: "<<loopStart->data<<endl;
+    else    
+        cout<<"no starting node, loop not present"<<endl;
+        
     return 0;
 }
