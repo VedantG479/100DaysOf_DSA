@@ -23,7 +23,6 @@ int main(){
     for(int i=0; i<size; i++){
         totalSum+=arr[i];
     }
-    int index = 0;
-    cout<<"Peak Index is: "<<findPeak(index,0,totalSum,arr);
+    cout<<"Peak Index is: "<<findPeak(0,0,totalSum,arr);
     return 0;
 }
