@@ -32,12 +32,14 @@ void insertHead(Node* &head, int data){
 void reverse(Node* start, Node* end){
     Node* prev = NULL;
     Node* current = start;
-    Node* forward = NULL;
-    while(prev!=end->next){
-        forward = current->next;
+    Node* forward = current->next;
+    while(prev!=end){
         current -> next = prev;
         prev = current;
-        current  = forward;
+        current = forward;
+        if(forward!=NULL){
+            forward = forward->next;
+        }
     }
     
 }
@@ -55,16 +57,16 @@ Node* reverseGroup(Node* head, int k){
         }
     }
    
+   Node* nextHead = reverseGroup(end->next,k);
     reverse(start,end);
     
-    Node* nextHead = reverseGroup(end->next,k);
     start->next = nextHead;
     return end;
 }
 
 int main(){
     Node* head = NULL;
-    insertHead(head,60);
+    //insertHead(head,60);
     insertHead(head,50);
     insertHead(head,40);
     insertHead(head,30);
